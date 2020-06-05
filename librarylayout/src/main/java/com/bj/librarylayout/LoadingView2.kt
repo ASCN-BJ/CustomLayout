@@ -15,7 +15,7 @@ import java.math.BigDecimal
 /**
  * 横向加载进度条
  */
-class LoadingView @JvmOverloads constructor(
+class LoadingView2 @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -72,7 +72,7 @@ class LoadingView @JvmOverloads constructor(
         isDither = true
         style = Paint.Style.FILL
         color = strokeColor
-        xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        xfermode = PorterDuffXfermode(PorterDuff.Mode.SCREEN)
     }
 
     //内部矩形
@@ -86,8 +86,6 @@ class LoadingView @JvmOverloads constructor(
         canvas ?: return
         val width = measuredWidth
         val height = measuredHeight
-        val saveCount = canvas.saveLayer(0f, 0f, width.toFloat(), height.toFloat(), null)
-
         mReactF.right = width.toFloat()
         mReactF.bottom = height.toFloat()
         //画笔设置
@@ -104,10 +102,9 @@ class LoadingView @JvmOverloads constructor(
         )
         if ((mul(width.toFloat(), (div(percent.toFloat(), 100F))) - borderWidth) >= 1) {
             //内边框
-            mReactFInner.left = 0F + borderWidth
+            mReactFInner.left = -mReactF.width() + borderWidth+mul(mReactF.width(), (div(percent.toFloat(), 100F)))
             mReactFInner.top = 0F + borderWidth
-            mReactFInner.right =
-                (mul(width.toFloat(), (div(percent.toFloat(), 100F))) - borderWidth)
+            mReactFInner.right =mReactFInner.left+mReactF.width()-borderWidth*2
             mReactFInner.bottom = height.toFloat() - borderWidth
             canvas.drawRoundRect(
                 mReactFInner,
@@ -116,7 +113,6 @@ class LoadingView @JvmOverloads constructor(
                 progressPaint
             )
         }
-//        canvas.restoreToCount(saveCount)
         Log.d(TAG, "innerRect:$mReactFInner")
         //画中间的文字
         mPaint.color = textColor

@@ -12,5 +12,11 @@
             <enum name="end" value="2" />
         </attr>
     </declare-styleable>
-
+    <declare-styleable name="CircularArcProgressView">
+        <attr name="capv_background_color" format="color" />
+        <attr name="capv_progress_color" format="color" />
+        <attr name="capv_progress_text_color" format="color" />
+        <attr name="capv_percent" format="float" />
+        <attr name="capv_is_show_progress_text" format="boolean" />
+    </declare-styleable>
 </resources>

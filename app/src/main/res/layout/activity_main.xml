@@ -1,26 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <com.bj.librarylayout.LoadingView
-        android:id="@+id/loadingView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_margin="10dp"
-        app:borderWidth="10dp"
-        app:textColor="#000000"
-        app:textSize="20sp" />
-
-    <Button
-        android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="开始"
-        tools:ignore="HardcodedText" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <com.bj.librarylayout.LoadingView
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            app:textColor="#000000"
+            app:textSize="18sp" />
+
+        <com.bj.librarylayout.LoadingView2
+            android:id="@+id/loadingView2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            app:borderWidth="3dp"
+            app:outColor="@color/circular_arc_progress_view_first_background_color"
+            app:textColor="#ffffff"
+            app:textSize="18sp" />
+
+        <com.bj.librarylayout.CircularArcProgressView
+            android:id="@+id/capv_first"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="16dp"
+            app:capv_background_color="@color/circular_arc_progress_view_first_background_color"
+            app:capv_is_show_progress_text="true"
+            app:capv_percent="1.0"
+            app:capv_progress_color="@color/circular_arc_progress_view_first_progress_color" />
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始"
+            tools:ignore="HardcodedText" />
+
+        <com.bj.librarylayout.CirclePieCharView
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+
+    </LinearLayout>
+</ScrollView>
