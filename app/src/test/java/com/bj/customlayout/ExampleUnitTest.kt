@@ -28,10 +28,20 @@ class ExampleUnitTest {
 
     @Test
     fun testFor() {
-        var i = 0
-        val x = arrayOf(10, 10)
-        for (i in x.indices) {
-            println("output:->$i")
+//        var i = 0
+//        val x = arrayOf(10, 10)
+//        for (i in x.indices) {
+//            println("output:->$i")
+//        }
+        var x = 1
+        while (true) {
+//            x += 1
+            x++
+            println("x+before->$x")
+            if (x >= 100) {
+                return
+            }
+            println("x->$x")
         }
     }
 
@@ -63,7 +73,7 @@ class ExampleUnitTest {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            if(x>200){
+            if (x > 200) {
                 break
             }
             println("hello world ->$x")

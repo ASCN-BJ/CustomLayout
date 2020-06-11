@@ -1,12 +1,12 @@
 package com.bj.librarylayout
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
+import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
+import com.bj.librarylayout.util.MeasureUtil
 
 /**
  * 环形饼状图
@@ -25,22 +25,32 @@ class CirclePieCharView @JvmOverloads constructor(
         style = Paint.Style.STROKE
         strokeJoin = Paint.Join.ROUND
     }
+    //界面重绘问题
+    private val mTextPaint = Paint().apply {
+        isAntiAlias = true
+    }
+
+    private val textBound = Rect()
+
+    //先暂时写个boolean
+    private var completeFlag = false
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         val mWidth = width
         val mHeight = height
-        mPaint.strokeWidth = mHeight / 2 / 6.toFloat()
+        val minWH = mWidth.coerceAtMost(mHeight)
+        val strokeWidth = mHeight.div(12).toFloat()
+        mPaint.strokeWidth = strokeWidth
 
-        val centerX = mWidth / 2
-        val centerY: Int = mHeight / 2
-        val radius = mWidth / 2 - mHeight / 2 / 3.toFloat()
-        reactF.top = 0f+radius
-        reactF.left = 0f+radius
-        reactF.right = reactF.left+300
-        reactF.bottom = reactF.top+300
-//        reactF.right=radius.toFloat()
-//        reactF.bottom=radius.toFloat()
+        val centerX = mWidth.div(2)
+        val centerY: Int = mHeight.div(2)
+        val radius = minWH.div(2) - strokeWidth.minus(2)
+
+        reactF.top = 0F + strokeWidth.div(2)
+        reactF.left = 0F + strokeWidth.div(2)
+        reactF.right = reactF.left + minWH - strokeWidth
+        reactF.bottom = reactF.top + minWH - strokeWidth
 
         mPaint.color = Color.parseColor("#EAEAEA")
         drawCircle(-90F, 360f, centerX.toFloat(), centerY.toFloat(), radius.toFloat(), canvas)
@@ -57,6 +67,18 @@ class CirclePieCharView @JvmOverloads constructor(
         mPaint.color = Color.parseColor("#FFA92A")
         drawCircle(60f, 180f, centerX.toFloat(), centerY.toFloat(), radius.toFloat(), canvas)
 
+        //绘制中间文字
+        mTextPaint.color = Color.parseColor("#333333")
+        val text = "LOADING"
+        mTextPaint.textSize = MeasureUtil.dp2px(context, 19F).toFloat()
+
+        mTextPaint.getTextBounds(text, 0, text.length, textBound)
+
+
+        val startX = reactF.centerX() - textBound.width().div(2)
+        val startY = reactF.centerY() + textBound.height().div(2)
+
+        canvas!!.drawText(text, 0, text.length, startX, startY, mTextPaint)
     }
 
     val reactF by lazy { RectF() }
